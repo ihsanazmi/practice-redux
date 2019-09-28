@@ -1,32 +1,36 @@
 import React, { Component } from 'react'
+import {connect} from 'react-redux'
 
 class App extends Component {
     
     state = {count : 0}
     
     onClickTambah = ()=>{
-        this.setState({
-            count : this.state.count + 1
-        })
+       this.props.dispatch({type: 'INCREMENT'})
     }
 
     onClickKurang = ()=>{
-        this.setState({
-            count: this.state.count - 1
-        })
+        this.props.dispatch({type: 'DECREMENT'})
     }
 
     render() {
         return (
             <div>
                 <center>
-                    <h1>{this.state.count}</h1> 
+                    <h1>{this.props.count}</h1> 
                     <button className="btn btn-outline-danger" onClick={this.onClickKurang}>Kurang</button><span> </span>
                     <button className="btn btn-outline-success" onClick={this.onClickTambah}>Tambah</button>
                 </center>
             </div>
         )
     }
+
 }
 
-export default App
+function mapStateToProps(state){
+    return{
+        count: state.count
+    }
+}
+
+export default connect (mapStateToProps) (App)
